@@ -11,9 +11,9 @@
 
 ##  Scenario
 
-Management suspects that some employees may be using TOR browsers to bypass network security controls because recent network logs show unusual encrypted traffic patterns and connections to known TOR entry nodes. Additionally, there have been anonymous reports of employees discussing ways to access restricted sites during work hours. The goal is to detect any TOR usage and analyze related security incidents to mitigate potential risks. If any use of TOR is found, notify management.
+Management suspects that an employee may be using TOR browser to bypass network security controls because recent network logs show unusual encrypted traffic patterns and connections to known TOR entry nodes. Additionally, there have been anonymous reports of employees discussing ways to access restricted sites during work hours. The goal is to detect any TOR usage and analyze related security incidents to mitigate potential risks. If any use of TOR is found, notify management.
 
-### High-Level TOR-Related IoC Discovery Plan
+### TOR-Related IoC Discovery Plan
 
 - **Check `DeviceFileEvents`** for any `tor(.exe)` or `firefox(.exe)` file events.
 - **Check `DeviceProcessEvents`** for any signs of installation or usage.
@@ -38,7 +38,7 @@ DeviceFileEvents
 | order by Timestamp desc
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
 ```
-<img width="1212" alt="image" src="">
+<img width="1212" alt="image" src="https://github.com/user-attachments/assets/8162b636-af53-47d9-b2d0-910f24af336a">
 
 ---
 
@@ -55,15 +55,14 @@ DeviceProcessEvents
 | where ProcessCommandLine contains "tor-browser-windows"
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, ProcessCommandLine, SHA256
 ```
-<img width="1212" alt="image" src="https://github.com/user-attachments/assets/b07ac4b4-9cb3-4834-8fac-9f5f29709d78">
-
+<img width="1212" alt="image" src="https://github.com/user-attachments/assets/895917c3-4a24-455f-acca-5e4b5c341d1f">
 ---
 
 ### 3. Searched the `DeviceProcessEvents` Table for TOR Browser Execution
 
 Searched the DeviceProcessEvents table for any indication of user “labproject” opening the tor browser; logs confirm tor browser was launched at: 2025-05-06T20:45:06.0206654Z
-There were also other instances of firefox.exe (tor) and tor.exe that spawned afterwards.
-
+There were also other instances of firefox.exe (tor) and tor.exe that spawned afterwards. <br>
+Seeing -contentproc with -isForBrowser and tab means a web page (tab) was opened in Firefox. This does confirm browser use, beyond just launching the main process.
 
 **Query used to locate events:**
 
@@ -74,13 +73,13 @@ DeviceProcessEvents
 | order by Timestamp desc
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, ProcessCommandLine, SHA256
 ```
-<img width="1212" alt="image" src="https://github.com/user-attachments/assets/b13707ae-8c2d-4081-a381-2b521d3a0d8f">
+<img width="1212" alt="image" src="https://github.com/user-attachments/assets/5d5d411d-414b-4f48-a467-f8ae770bbc9a">
 
 ---
 
 ### 4. Searched the `DeviceNetworkEvents` Table for TOR Network Connections
 
-Searched DeviceNetworkEvents table for any indication that the tor browser established any connections. On 2025-05-06T20:45:35.0448696Z, the device named "justins-tor-bro" (logged in as labproject) successfully established a network connection using tor.exe located at C:\Users\labproject\Desktop\Tor Browser\Browser\TorBrowser\Tor\tor.exe. The connection was made to the remote IP address 158.101.203.38 via port 9001, which is commonly associated with the Tor network.
+Searched DeviceNetworkEvents table for any indication that the tor browser established any connections. On 2025-05-06T20:45:35.0448696Z, the device named "justins-tor-bro" (logged in as labproject) successfully established a network connection using tor.exe located at C:\Users\labproject\Desktop\Tor Browser\Browser\TorBrowser\Tor\tor.exe. The connection was made to the remote IP addresses 158.101.203.38 and 94.23.121.150, both via port 9001, which is commonly associated with the Tor network.
 
 **Query used to locate events:**
 
@@ -91,7 +90,7 @@ DeviceNetworkEvents
 | where RemotePort in ("9001", "9050", "9051", "5000", "9052", "9100", "9030", "9150", "9151")
 | project Timestamp, DeviceName, InitiatingProcessAccountName, ActionType, RemoteIP, RemoteUrl, RemotePort, InitiatingProcessFileName, InitiatingProcessFolderPath
 ```
-<img width="1212" alt="image" src="https://github.com/user-attachments/assets/87a02b5b-7d12-4f53-9255-f5e750d0e3cb">
+<img width="1212" alt="image" src="https://github.com/user-attachments/assets/9c35b097-58a7-433d-85ee-64c46ecfec07">
 
 ---
 
@@ -110,7 +109,7 @@ DeviceNetworkEvents
 - **Timestamp:** 2025-05-06T20:44:08.3760807Z  
 - **Event:** Silent installation of Tor Browser version 14.5.1  
 - **Folder Path:** C:\Users\labproject\Downloads  
-- **Command Line:** tor-browser-windows.exe /S  
+- **Command Line:** tor-browser-windows-x86_64-portable-14.5.1.exe  /S  
 
 ### 3. Launch of Tor Browser
 
@@ -134,13 +133,13 @@ DeviceNetworkEvents
 - **Timestamp:** 2025-05-06T20:54:23.3987908Z  
 - **Event:** File tor-shopping-list created  
 - **Folder Path:** C:\Users\labproject\Desktop  
-- **File Name:** tor-shopping-list
+- **File Name:** tor-shopping-list.txt
 
 ---
 
 ## Summary
 
-On May 6, 2025, the user account labproject on device justins-tor-bro initiated the silent installation of the Tor Browser (v14.5.1), followed by its successful launch. Shortly after, the browser established an outbound network connection to IP 158.101.203.38 over port 9001, which is a known Tor relay port, confirming that Tor network usage occurred. Approximately 9 minutes later, a file named tor-shopping-list was created on the user’s desktop, potentially suggesting intent to engage in transactions through the Tor network. The sequence of these events indicates deliberate and covert usage of the Tor browser within the corporate environment.
+On May 6, 2025, the user account labproject on device justins-tor-bro initiated the silent installation of the Tor Browser (v14.5.1), followed by its successful launch. Shortly after, the browser established an outbound network connection to IP 158.101.203.38 over port 9001, which is a known Tor relay port, confirming that Tor network usage occurred. Approximately 9 minutes later, a file named tor-shopping-list was created on the user’s desktop, suggesting intent to engage in transactions through the Tor network. The sequence of these events indicates deliberate and covert usage of the Tor browser within the corporate environment.
 
 ---
 
