@@ -1,4 +1,6 @@
+<kbd>
 <img width="400" src="https://github.com/user-attachments/assets/530ce00f-0c4a-4f20-b365-05f3a697bbec" alt="Tor Logo with the onion and a crosshair on it"/>
+</kbd>
 
 # Threat Hunt Report: Unauthorized TOR Usage
 - [Scenario Creation](https://github.com/JustinSoflin/Threat-Hunting-Scenario-Tor-Browser-Usage-/blob/main/threat-hunting-scenario-tor-event-creation.md)
@@ -37,7 +39,9 @@ DeviceFileEvents
 | order by Timestamp desc
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
 ```
+<kbd>
 <img width="1212" alt="image" src="https://github.com/user-attachments/assets/8162b636-af53-47d9-b2d0-910f24af336a">
+</kbd>
 
 ---
 
@@ -54,7 +58,10 @@ DeviceProcessEvents
 | where ProcessCommandLine contains "tor-browser-windows"
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, ProcessCommandLine, SHA256
 ```
+<kbd>
 <img width="1212" alt="image" src="https://github.com/user-attachments/assets/895917c3-4a24-455f-acca-5e4b5c341d1f">
+</kbd>
+
 ---
 
 ### 3. Searched the `DeviceProcessEvents` Table for TOR Browser Execution
@@ -72,7 +79,9 @@ DeviceProcessEvents
 | order by Timestamp desc
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, ProcessCommandLine, SHA256
 ```
+<kbd>
 <img width="1212" alt="image" src="https://github.com/user-attachments/assets/5d5d411d-414b-4f48-a467-f8ae770bbc9a">
+</kbd>
 
 ---
 
@@ -89,7 +98,9 @@ DeviceNetworkEvents
 | where RemotePort in ("9001", "9050", "9051", "5000", "9052", "9100", "9030", "9150", "9151")
 | project Timestamp, DeviceName, InitiatingProcessAccountName, ActionType, RemoteIP, RemoteUrl, RemotePort, InitiatingProcessFileName, InitiatingProcessFolderPath
 ```
+<kbd>
 <img width="1212" alt="image" src="https://github.com/user-attachments/assets/9c35b097-58a7-433d-85ee-64c46ecfec07">
+</kbd>
 
 ---
 
