@@ -116,6 +116,7 @@ DeviceNetworkEvents
 | **File Indicator** | Files containing the string `"tor"`                       |
 
 <br>
+
 ### 2. Silent Installation of Tor Browser
 
 | **Field**         | **Value**                                                        |
