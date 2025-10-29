@@ -8,6 +8,21 @@
 - Kusto Query Language (KQL)
 - Tor Browser
 
+---
+
+[Scenario](#scenario) • <br>
+[TOR-Related IoC Discovery Plan](#tor-related-ioc-discovery-plan) • <br>
+[1. Searched the `DeviceFileEvents` Table](#1-searched-the-devicefileevents-table) • <br>
+[2. Searched the `DeviceProcessEvents` Table](#2-searched-the-deviceprocessevents-table) • <br>
+[3. Searched the `DeviceProcessEvents` Table for TOR Browser Execution](#3-searched-the-deviceprocessevents-table-for-tor-browser-execution) • <br>
+[4. Searched the `DeviceNetworkEvents` Table for TOR Network Connections](#4-searched-the-devicenetworkevents-table-for-tor-network-connections) • <br>
+[Chronological Event Timeline](#chronological-event-timeline) • <br>
+[Summary](#summary) • <br>
+[Response Taken](#response-taken)
+
+
+---
+
 ##  Scenario
 
 Management suspects that an employee may be using TOR browser to bypass network security controls because recent network logs show unusual encrypted traffic patterns and connections to known TOR entry nodes. Additionally, there have been anonymous reports of employees discussing ways to access restricted sites during work hours. The goal is to detect any TOR usage and analyze related security incidents to mitigate potential risks. If any use of TOR is found, notify management.
