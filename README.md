@@ -10,15 +10,17 @@
 
 ---
 
-[Scenario](#scenario) • <br>
-[TOR-Related IoC Discovery Plan](#tor-related-ioc-discovery-plan) • <br>
-[1. Searched the `DeviceFileEvents` Table](#1-searched-the-devicefileevents-table) • <br>
-[2. Searched the `DeviceProcessEvents` Table](#2-searched-the-deviceprocessevents-table) • <br>
-[3. Searched the `DeviceProcessEvents` Table for TOR Browser Execution](#3-searched-the-deviceprocessevents-table-for-tor-browser-execution) • <br>
-[4. Searched the `DeviceNetworkEvents` Table for TOR Network Connections](#4-searched-the-devicenetworkevents-table-for-tor-network-connections) • <br>
-[Chronological Event Timeline](#chronological-event-timeline) • <br>
-[Summary](#summary) • <br>
-[Response Taken](#response-taken)
+## Table of Contents
+
+[1) Scenario](#scenario)  <br>
+[2) TOR-Related IoC Discovery Plan](#tor-related-ioc-discovery-plan)  <br>
+[3) Searched the `DeviceFileEvents` Table](#1-searched-the-devicefileevents-table)  <br>
+[4) Searched the `DeviceProcessEvents` Table](#2-searched-the-deviceprocessevents-table)  <br>
+[5) Searched the `DeviceProcessEvents` Table for TOR Browser Execution](#3-searched-the-deviceprocessevents-table-for-tor-browser-execution)  <br>
+[6) Searched the `DeviceNetworkEvents` Table for TOR Network Connections](#4-searched-the-devicenetworkevents-table-for-tor-network-connections)  <br>
+[7) Chronological Event Timeline](#chronological-event-timeline)  <br>
+[8) Summary](#summary)  <br>
+[9) Response Taken](#response-taken)
 
 
 ---
